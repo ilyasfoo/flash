@@ -10,6 +10,7 @@ class FlashNotifier
      * @var SessionStore
      */
     private $session;
+    protected $namespace = 'flash_notification';
 
     /**
      * Create a new flash notifier instance.
@@ -85,8 +86,8 @@ class FlashNotifier
     {
         $this->message($message, $level);
 
-        $this->session->flash('flash_notification.overlay', true);
-        $this->session->flash('flash_notification.title', $title);
+        $this->session->flash($this->namespace . '.overlay', true);
+        $this->session->flash($this->namespace . '.title', $title);
 
         return $this;
     }
@@ -100,8 +101,8 @@ class FlashNotifier
      */
     public function message($message, $level = 'info')
     {
-        $this->session->flash('flash_notification.message', $message);
-        $this->session->flash('flash_notification.level', $level);
+        $this->session->flash($this->namespace . '.message', $message);
+        $this->session->flash($this->namespace . '.level', $level);
 
         return $this;
     }
@@ -113,7 +114,19 @@ class FlashNotifier
      */
     public function important()
     {
-        $this->session->flash('flash_notification.important', true);
+        $this->session->flash($this->namespace . '.important', true);
+
+        return $this;
+    }
+
+    /**
+     * Set the namespace for notification
+     *
+     * @return $this
+     */
+    public function setNamespace($namespace = 'flash_notification')
+    {
+        $this->namespace = $namespace;
 
         return $this;
     }
