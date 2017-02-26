@@ -16,13 +16,13 @@ And with the view, we can create a blade template that would accept both namespa
 
 ```php
 @if (isset($namespace))
-	@if (session()->has($namespace.'.message'))
-	  <div class="alert alert-{{ session($namespace.'.level') }}">
-	      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+  @if (session()->has('flash_notification.namespace.'.$namespace.'.message'))
+    <div class="alert alert-{{ session('flash_notification.namespace.'.$namespace.'.level') }}">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 
-	      {!! session($namespace.'.message') !!}
-	  </div>
-	@endif
+        {!! session('flash_notification.namespace.'.$namespace.'.message') !!}
+    </div>
+  @endif
 @elseif (session()->has('flash_notification.message'))
   <div class="alert alert-{{ session('flash_notification.level') }}">
       <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
