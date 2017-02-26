@@ -10,7 +10,7 @@ class FlashNotifier
      * @var SessionStore
      */
     private $session;
-    protected $namespace = 'flash_notification';
+    protected $namespace = '';
 
     /**
      * Create a new flash notifier instance.
@@ -86,8 +86,8 @@ class FlashNotifier
     {
         $this->message($message, $level);
 
-        $this->session->flash($this->namespace . '.overlay', true);
-        $this->session->flash($this->namespace . '.title', $title);
+        $this->session->flash($this->getNamespace() . '.overlay', true);
+        $this->session->flash($this->getNamespace() . '.title', $title);
 
         return $this;
     }
@@ -101,8 +101,8 @@ class FlashNotifier
      */
     public function message($message, $level = 'info')
     {
-        $this->session->flash($this->namespace . '.message', $message);
-        $this->session->flash($this->namespace . '.level', $level);
+        $this->session->flash($this->getNamespace() . '.message', $message);
+        $this->session->flash($this->getNamespace() . '.level', $level);
 
         return $this;
     }
@@ -114,7 +114,7 @@ class FlashNotifier
      */
     public function important()
     {
-        $this->session->flash($this->namespace . '.important', true);
+        $this->session->flash($this->getNamespace() . '.important', true);
 
         return $this;
     }
@@ -124,11 +124,26 @@ class FlashNotifier
      *
      * @return $this
      */
-    public function setNamespace($namespace = 'flash_notification')
+    public function setNamespace($namespace = '')
     {
         $this->namespace = $namespace;
 
         return $this;
+    }
+
+    /**
+     * Get the namespace for notification. If it is empty, will return the default (which is empty).
+     * If not empty, will return the namespace inside a namespace keyword.
+     *
+     * @return $this
+     */
+    public function getNamespace()
+    {
+        $namespace = 'flash_notification';
+        if ($this->namespace != '') {
+            $namespace .= '.namespace.' .$this->namespace;
+        }
+        return $namespace;
     }
 }
 
