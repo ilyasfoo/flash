@@ -1,5 +1,41 @@
 # Easy Flash Messages for Your Laravel App
 
+## Whats in this fork
+
+Added feature for setting a namespace so you can have multiple placements for notification in a single page.
+
+Example:
+
+```php
+flash()->setNamespace('form-contactus')->message('This message is only displayed in a namespaced notification);
+```
+
+And with the view, we can create a blade template that would accept both namespaced and default notification:
+
+```php
+@if (isset($namespace))
+	@if (session()->has($namespace.'.message'))
+	  <div class="alert alert-{{ session($namespace.'.level') }}">
+	      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+
+	      {!! session($namespace.'.message') !!}
+	  </div>
+	@endif
+@elseif (session()->has('flash_notification.message'))
+  <div class="alert alert-{{ session('flash_notification.level') }}">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+
+      {!! session('flash_notification.message') !!}
+  </div>
+@endif
+```
+
+Calling the blade template:
+
+```php
+@include('/includes/flash-notification', ['namespace' => 'form-contactus'])
+```
+
 ## Installation
 
 First, pull in the package through Composer.
