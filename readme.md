@@ -1,10 +1,12 @@
 # Easy Flash Messages for Your Laravel App
 
-## Whats in this fork
+## What's in this fork
 
 Added feature for setting a namespace so you can have multiple placements for notification in a single page.
 
-Example:
+###Example
+
+In the controller:
 
 ```php
 flash()->setNamespace('form-contactus')->message('This message is only displayed in a namespaced notification);
